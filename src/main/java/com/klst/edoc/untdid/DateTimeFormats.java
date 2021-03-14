@@ -1,4 +1,4 @@
-package com.klst.untdid.codelist;
+package com.klst.edoc.untdid;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;

@@ -1,4 +1,4 @@
-package com.klst.untdid.codelist;
+package com.klst.edoc.untdid;
 
 import java.util.HashMap;
 import java.util.Map;
