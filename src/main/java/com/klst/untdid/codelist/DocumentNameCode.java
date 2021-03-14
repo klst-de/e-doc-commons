@@ -3,8 +3,7 @@ package com.klst.untdid.codelist;
 import java.util.HashMap;
 import java.util.Map;
 
-import un.unece.uncefact.data.standard.qualifieddatatype._103.DocumentCodeType;
-import un.unece.uncefact.data.standard.unqualifieddatatype._103.CodeType;
+import com.klst.ebXml.reflection.Getter;
 
 /* urn:xoev-de:kosit:codeliste:untdid.1001
  * United Nations Trade Data Interchange Directory (UNTDID), http://www.unece.org/fileadmin/DAM/trade/untdid/d16b/tred/tredi2.htm
@@ -102,14 +101,21 @@ public enum DocumentNameCode {
         return map.get(code);
     }
 
-    public static DocumentNameCode valueOf(CodeType codeType) {
-    	int code = Integer.parseInt(codeType.getValue());
-        return valueOf(code);
+    public static DocumentNameCode valueOf(Object codeType) {
+    	Object value = Getter.getValue(codeType, "un.unece.uncefact.data.standard.qualifieddatatype._103.DocumentCodeType");
+    	if(value!=null) return valueOf(Integer.parseInt((String)value));
+    	value = Getter.getValue(codeType, "un.unece.uncefact.data.standard.unqualifieddatatype._103.CodeType");
+    	if(value!=null) return valueOf(Integer.parseInt((String)value));
+    	return null;
     }
-
-    public static DocumentNameCode valueOf(DocumentCodeType ciiCode) {
-    	int code = Integer.parseInt(ciiCode.getValue());
-        return valueOf(code);
-    }
+//    public static DocumentNameCode valueOf(CodeType codeType) {
+//    	int code = Integer.parseInt(codeType.getValue());
+//        return valueOf(code);
+//    }
+//
+//    public static DocumentNameCode valueOf(DocumentCodeType ciiCode) {
+//    	int code = Integer.parseInt(ciiCode.getValue());
+//        return valueOf(code);
+//    }
 
 }
