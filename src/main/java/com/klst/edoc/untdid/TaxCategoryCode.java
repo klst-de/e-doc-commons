@@ -61,6 +61,7 @@ Anmerkung: nicht alle Codes aus der Codeliste UNTDID 5305 werden verwendet
  * <br> - Liable for IPSI (Ceuta/Melilla tax)
  * 
  * @see EN16931-1 Chapter 6.4.3.2 Specification of VAT category codes
+ * @see un.unece.uncefact.codelist.standard.unece.dutyortaxorfeecategorycode.d19b.DutyorTaxorFeeCategoryCodeContentType
  */
 public enum TaxCategoryCode {
 
