@@ -22,15 +22,15 @@ public interface BusinessPartyFactory {
 	 * @param tradingName - an optional name by which the BP is known, other than registrationName
 	 *                       (also known as Business name).
 	 * @param PostalAddress address
-	 * @param IContact contact
+	 * @param ContactInfo contact
 	 * 
 	 * @see BusinessParty
 	 * @see PostalAddress
-	 * @see IContact
+	 * @see ContactInfo
 	 */
-	public BusinessParty createParty(String name, String tradingName, PostalAddress address, IContact contact);
+	public BusinessParty createParty(String name, String tradingName, PostalAddress address, ContactInfo contact);
 	
-	default BusinessParty createParty(String name, PostalAddress address, IContact contact) {
+	default BusinessParty createParty(String name, PostalAddress address, ContactInfo contact) {
 		return createParty(name, null, address, contact);
 	}
 	

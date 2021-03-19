@@ -3,12 +3,13 @@ package com.klst.edoc.api;
 /**
  * BG-6 , BG-9 CONTACT
  * <p>
- * A group (BG) of business terms (BT) providing contact information relevant for the business partner.
+ * A group (BG) of business terms (BT) providing contact information relevant for the business partner,
+ * a legal entity or person.
  * 
- * @see IContactFactory#createContact(String, String, String)
+ * @see ContactInfoFactory#createContactInfo(String, String, String)
  * @see <a href="https://standards.cen.eu">standards.cen.eu</a> (en)EN_16931_1_2017 for BGs, BTs, rules and request IDs
  */
-public interface IContact extends IContactFactory {
+public interface ContactInfo extends ContactInfoFactory {
 
 	// use factory to set props
 

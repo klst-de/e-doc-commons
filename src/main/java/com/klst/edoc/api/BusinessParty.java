@@ -20,10 +20,10 @@ public interface BusinessParty extends BusinessPartyFactory {
 	}
 	
 	/* 
-	 * a shortcut for getIContact()
+	 * a shortcut for getContactInfo()
 	 */
-	default IContact getContact() {
-		return ((BusinessPartyContact)this).getIContact();
+	default ContactInfo getBPContact() {
+		return ((BusinessPartyContact)this).getContactInfo();
 	}
 	
 	// use factory: createParty(String name, String tradingName, PostalAddress address, IContact contact);

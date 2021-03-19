@@ -7,7 +7,7 @@ package com.klst.edoc.api;
  * 
  * @see <a href="https://java-design-patterns.com/patterns/abstract-factory/">java-design-patterns</a> for patterns abstract-factory
  */
-public interface IContactFactory {
+public interface ContactInfoFactory {
 	
 	/**
 	 * creates business group (BG) CONTACT
@@ -16,8 +16,8 @@ public interface IContactFactory {
 	 * @param contactTel - a phone number for the contact point.
 	 * @param contactMail - an e-mail address for the contact point.
 	 * 
-	 * @see IContact
+	 * @see ContactInfo
 	 */
-	public IContact createContact(String contactName, String contactTel, String contactMail);
+	public ContactInfo createContactInfo(String contactName, String contactTel, String contactMail);
 	
 }
