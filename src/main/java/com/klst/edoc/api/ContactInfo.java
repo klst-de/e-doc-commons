@@ -41,14 +41,4 @@ public interface ContactInfo extends ContactInfoFactory {
 	 */
 	public String getContactEmail();
 
-	/**
-	 * optional contact code specifying the type of contact
-	 * <p>
-	 * To be chosen from the entries in UNTDID 3139
-	 * 
-	 * @param code - example buyer contact code 'LB' == Place of delivery contact : Department/employee to be contacted at the place of delivery.
-	 */
-	public void setContactType(String code);
-	public String getContactType();
-	
 }
