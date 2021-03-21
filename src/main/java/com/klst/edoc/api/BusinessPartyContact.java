@@ -21,4 +21,16 @@ public interface BusinessPartyContact extends ContactInfo {
 		return getContactInfo()==null ? null : getContactInfo().getContactEmail();
 	}
 
+	@Override
+	default String getContactType() {
+		return getContactInfo()==null ? null : getContactInfo().getContactType();
+	}
+	@Override
+	default void setContactType(String code) {
+		ContactInfo contact = getContactInfo();
+		if(contact!=null) {
+			contact.setContactType(code);
+		}	
+	}
+
 }
