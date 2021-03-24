@@ -10,6 +10,12 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+/**
+ * date time format conversion used in edoc
+ * 
+ * @see https://service.unece.org/trade/untdid/d96b/uncl/uncl2379.htm
+ *
+ */
 public class DateTimeFormats {
 
 	// UNTDID 2379 Date/time/period format qualifier , see https://service.unece.org/trade/untdid/d96b/uncl/uncl2379.htm
@@ -31,8 +37,7 @@ public class DateTimeFormats {
 			// TODO Auto-generated catch block
 			ex.printStackTrace();
 		}
-		return ts;
-		
+		return ts;	
 	}
 	
 	public static Timestamp ymdToTs(String ymd, String format) {
@@ -82,5 +87,27 @@ public class DateTimeFormats {
 		return new SimpleDateFormat(CCYYMMDD).format(ts);
 	}
 
+	// opentrans dtDATETIME: example <ORDER_DATE>2009-05-13T06:20:00+01:00</ORDER_DATE>
+	public static final String dtDATETIME = "yyyy-MM-dd'T'HH:mm:ssXXX";
+	public static String tsTodtDATETIME(Timestamp ts) {
+		return new SimpleDateFormat(dtDATETIME).format(ts);
+	}
+	public static Timestamp dtDATETIMEToTs(String dtDateTime) {
+		Timestamp ts = null;
+		if(dtDateTime!=null) try {
+			//Timestamp.valueOf("yyyy-[m]m-[d]d hh:mm:ss[.f...]"); // JDBC timestamp escape format
+			ts = Timestamp.valueOf(dtDateTime);
+		} catch (IllegalArgumentException e) {
+			try {
+				DateFormat df = new SimpleDateFormat(dtDATETIME);
+				java.util.Date date = df.parse(dtDateTime);
+				return new Timestamp(date.getTime());
+			} catch (ParseException ex) {
+				// try UNTDID 2379 Format "102" : yyyyMMddToTs
+			}
+			ts = ymdToTs(dtDateTime);
+		}
+		return ts;
+	}
 
 }
