@@ -1,13 +1,17 @@
 package com.klst.edoc.api;
 
+import java.util.List;
+
+import com.klst.edoc.untdid.ReferenceCode;
+
 /**
  * A common interface for
  * 
- * <br> BG-4 + 1..1 SELLER 
- * <br> BG-7 + 1..1 BUYER
- * <br> BG-10 + 0..1 PAYEE
- * <br> BG-11 + 0..1 SELLER TAX REPRESENTATIVE PARTY
- * <br> BG-13 + 0..1 DELIVERY INFORMATION / BT-70 BT-71 ShipToTradeParty
+ * <br> BG-4  1..1 SELLER 
+ * <br> BG-7  1..1 BUYER
+ * <br> BG-10 0..1 PAYEE
+ * <br> BG-11 0..1 SELLER TAX REPRESENTATIVE PARTY
+ * <br> BG-13 0..1 DELIVERY INFORMATION / BT-70 BT-71 ShipToTradeParty
  */
 
 public interface BusinessParty extends BusinessPartyFactory {
@@ -39,7 +43,7 @@ public interface BusinessParty extends BusinessPartyFactory {
 	 * The full formal name by which the Business Party is registered in the national registry of legal entities 
 	 * or as a Taxable person or otherwise trades as a person or persons.
 	 * 
-	 * @return Business Party name
+	 * @return Business Party registration name
 	 */
 	public String getRegistrationName();
 	
@@ -58,10 +62,27 @@ public interface BusinessParty extends BusinessPartyFactory {
 	// BG-4.BT-29  0..n Seller identifier
 	// BG-7.BT-46  0..1  Buyer identifier
 	// BG-10.BT-60 0..1  Payee identifier
+	/**
+	 * An identification of the Business Party with optional scheme identifier.
+	 * <p>
+	 * For many systems, this identifier is a key piece of information. 
+	 * Multiple Seller identifiers may be assigned or specified. 
+	 * They may be differentiated by using various identification schemes. 
+	 * If no scheme is specified, it should be known by Buyer and Seller, 
+	 * e.g. a previously exchanged Buyer assigned identifier of the Seller.
+	 * 
+	 * If used, the identification scheme shall be chosen from the entries of the 
+	 * list published by the ISO/IEC 6523 maintenance agency.
+	 * 
+	 * @return String or Identifier with scheme
+	 * 
+	 * @see https://en.wikipedia.org/wiki/ISO/IEC_6523
+	 * @see https://docs.peppol.eu/poacc/billing/3.0/codelist/ICD/
+	 */
 	public String getId(); // kleingeschrieben, nicht ID!
 	public Identifier getIdentifier();
 
-	public void addId(String name, String schemeID); // wg. 1..n
+	public void addId(String name, String schemeID); // wg. 1..n https://github.com/klst-de/e-invoice/issues/27
 	public void setId(String name, String schemeID);
 	default void setId(String name) {
 		setId(name, null);
@@ -73,6 +94,20 @@ public interface BusinessParty extends BusinessPartyFactory {
 	// BG-4.BT-30  0..1 Seller legal registration identifier 
 	// BG-7.BT-47  0..1  Buyer legal registration identifier
 	// BG-10.BT-61 0..1  Payee legal registration identifier
+	/**
+	 * An identifier issued by an official registrar that identifies the Business Party as a legal entity or person.
+	 * With optional scheme identifier.
+	 * <p>
+	 * If no identification scheme is specified, it should be known by Buyer and Seller.
+	 * 
+	 * If used, the identification scheme shall be chosen from the entries of the 
+	 * list published by the ISO/IEC 6523 maintenance agency.
+	 * 
+	 * @return String or Identifier with scheme
+	 * 
+	 * @see https://en.wikipedia.org/wiki/ISO/IEC_6523
+	 * @see https://docs.peppol.eu/poacc/billing/3.0/codelist/ICD/
+	 */
 	public String getCompanyId();
 	public Identifier getCompanyIdentifier();
 	
@@ -91,19 +126,50 @@ public interface BusinessParty extends BusinessPartyFactory {
 	
 	// usually the list contains one element, for BG-4 can be two BT-31+BT-32
 	// in BG-7, BG-11 ist nur ein Eintrag ==> VAT
-//	public List<Identifier> getTaxRegistrationIdentifier();
-	public Identifier getTaxRegistrationIdentifier();
+	public List<Identifier> getTaxRegistrationIdentifier();
 
 	public void setTaxRegistrationId(String name, String schemeID);
-	default void setTaxRegistrationIdentifier(Identifier id) {
-		if(id!=null) setTaxRegistrationId(id.getContent(), id.getSchemeIdentifier());
+	public void addTaxRegistrationId(String name, String schemeID);
+	default void addTaxRegistrationIdentifier(Identifier id) {
+		if(id!=null) addTaxRegistrationId(id.getContent(), id.getSchemeIdentifier());
 	}
-	
-	// BG-4.BT-30 0..1 Seller legal registration identifier
-	// BG-7.BT-47 0..1 Buyer legal registration identifier
-	public String getCompanyLegalForm();
-	public void setCompanyLegalForm(String name);
-	
+
+	/**
+	 * Seller tax registration identifier
+	 * <p>
+	 * The local identification (defined by the Seller’s address) of the Seller for tax purposes or 
+	 * a reference that enables the Seller to state his registered tax status.
+	 * <p>
+	 * This information may affect how the Buyer settles the payment (such as for social security fees). 
+	 * E.g. in some countries, if the Seller is not registered as a tax paying entity 
+	 * then the Buyer is required to withhold the amount of the tax and pay it on behalf of the Seller.
+	 * <p>
+	 * Cardinality: 0..1 (optional)
+	 * <br>EN16931-ID: 	BG-4.BT-32
+	 * <br>Rule ID: 	BR-S-2, BR-S-3, BR-S-4, BR-Z-2, BR-Z-3, BR-Z-4, 
+	 *                  BR-E-2, BR-E-3, BR-E-4, BR-AE-2, BR-AE-3, BR-AE-4, 
+	 *                  BR-IG-2, BR-IG-3, BR-IG-4, BR-IP-2, BR-IP-3, BR-IP-4,
+	 * <br>Request ID: 	R47
+	 * 
+	 * @param name - tax registration identifier
+	 * 
+	 * @see #setVATRegistrationId(String)
+	 */
+	default void setTaxRegistrationId(String name) {
+		addTaxRegistrationId(name, ReferenceCode.FiscalNumber.getValue());
+	}
+	// BG-4.BT-32 ++ 0..1 Seller tax registration identifier , @see BT-31
+	default String getTaxRegistrationId() {
+		List<Identifier> list = getTaxRegistrationIdentifier();
+		if(list.isEmpty()) return null;
+//		if(list.size()==1) return list.get(0).getContent();
+		for (int i=0; i<list.size(); i++) {
+			Identifier id = list.get(i);
+			if(id.getSchemeIdentifier().startsWith(ReferenceCode.FiscalNumber.getValue())) return id.getContent();
+		}
+		return null;
+	}
+
 	/**
 	 * VAT identifier - The VAT identifier (also known as VAT identification number).
 	 * <p>
@@ -119,7 +185,7 @@ public interface BusinessParty extends BusinessPartyFactory {
 	 * @param name - <A HREF="https://en.wikipedia.org/wiki/VAT_identification_number"">VAT identification number</A>
 	 *  prefixed by a country code based on EN ISO 3166-1 "Codes for the representation of names of countries and their subdivisions"
 	 * 
-	 * @see BG4_Seller#setTaxRegistrationId(String)
+	 * @see #setTaxRegistrationId(String)
 	 */
 	default void setVATRegistrationId(String name) {
 		setTaxRegistrationId(name, "VA");
@@ -127,26 +193,31 @@ public interface BusinessParty extends BusinessPartyFactory {
 	
 	// in BG-4 gibt es set/getTaxRegistrationId() für BT-32 , für alle BP BT-31:
 	default String getVATRegistrationId() {
-//		List<Identifier> list = getTaxRegistrationIdentifier();
-//		if(list.isEmpty()) return null;
-//		if(list.size()==1) return list.get(0).getContent();
-//		for (int i=0; i<list.size(); i++) {
-//			Identifier id = list.get(i);
-//			if(id.getSchemeIdentifier().startsWith("VA")) return id.getContent();
-//			// similar to:
-////			if(this instanceof PartyType) {
-////				if(id.getSchemeIdentifier().equals("VAT")) return id.getContent();
-////			} else {
-////				if(id.getSchemeIdentifier().equals("VA")) return id.getContent();
-////			}		
-//		}
-		Identifier id = getTaxRegistrationIdentifier();
-		if(id!=null) {
+		List<Identifier> list = getTaxRegistrationIdentifier();
+		if(list.isEmpty()) return null;
+		if(list.size()==1) return list.get(0).getContent();
+		for (int i=0; i<list.size(); i++) {
+			Identifier id = list.get(i);
 			if(id.getSchemeIdentifier().startsWith("VA")) return id.getContent();
+			// similar to:
+//			if(this instanceof PartyType) {
+//				if(id.getSchemeIdentifier().equals("VAT")) return id.getContent();
+//			} else {
+//				if(id.getSchemeIdentifier().equals("VA")) return id.getContent();
+//			}		
 		}
 		return null;
 	}
 
+	// BG-4.BT-33 0..1 Seller additional legal information
+	/**
+	 * Additional legal information relevant for the Seller. Such as share capital.
+	 * 
+	 * @return Text
+	 */
+	public String getCompanyLegalForm();
+	public void setCompanyLegalForm(String name);
+	
 	// BG-4.BT-34 Seller electronic address
 	// BG-7.BT-49 Buyer electronic address
 	public Identifier getUriUniversalCommunication(); // kleingeschrieben, nicht URI!
