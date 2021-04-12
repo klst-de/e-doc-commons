@@ -102,20 +102,19 @@ public enum DocumentNameCode {
     }
 
     public static DocumentNameCode valueOf(Object codeType) {
-    	Object value = Getter.getValue(codeType, "un.unece.uncefact.data.standard.qualifieddatatype._103.DocumentCodeType");
+    	Object value = Getter.getValue(codeType, "un.unece.uncefact.data.specification.corecomponenttypeschemamodule._2.CodeType");
     	if(value!=null) return valueOf(Integer.parseInt((String)value));
+
+    	value = Getter.getValue(codeType, "un.unece.uncefact.data.standard.qualifieddatatype._100.DocumentCodeType");
+    	if(value!=null) return valueOf(Integer.parseInt((String)value));
+    	
+    	value = Getter.getValue(codeType, "un.unece.uncefact.data.standard.qualifieddatatype._103.DocumentCodeType");
+    	if(value!=null) return valueOf(Integer.parseInt((String)value));
+    	
     	value = Getter.getValue(codeType, "un.unece.uncefact.data.standard.unqualifieddatatype._103.CodeType");
     	if(value!=null) return valueOf(Integer.parseInt((String)value));
+    	
     	return null;
     }
-//    public static DocumentNameCode valueOf(CodeType codeType) {
-//    	int code = Integer.parseInt(codeType.getValue());
-//        return valueOf(code);
-//    }
-//
-//    public static DocumentNameCode valueOf(DocumentCodeType ciiCode) {
-//    	int code = Integer.parseInt(ciiCode.getValue());
-//        return valueOf(code);
-//    }
 
 }
