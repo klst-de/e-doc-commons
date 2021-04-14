@@ -3,9 +3,6 @@ package com.klst.edoc.untdid;
 import java.util.HashMap;
 import java.util.Map;
 
-//import oasis.names.specification.ubl.schema.xsd.commonaggregatecomponents_2.TaxCategoryType;
-//import un.unece.uncefact.data.standard.qualifieddatatype._100.TaxCategoryCodeType;
-
 /* 
  * United Nations Trade Data Interchange Directory (UNTDID), http://www.unece.org/fileadmin/DAM/trade/untdid/d16b/tred/tredi2.htm
  * UN/EDIFACT 5305  Duty or tax or fee category code
@@ -104,13 +101,12 @@ public enum TaxCategoryCode {
             map.put(documentNameCode.value, documentNameCode);
         }
     }
+   
+    /* "you cannot override valueOf method" 
+     * @see https://stackoverflow.com/questions/9662170/override-valueof-and-tostring-in-java-enum
+     */
+    public static TaxCategoryCode getEnum(String code) {
+    	return code==null ? null : map.get(code);
+    }
     
-//    public static TaxCategoryCode valueOf(TaxCategoryType ublCode) {
-//    	return ublCode.getID()==null ? null : map.get(ublCode.getID().getValue());
-//    } 
-//
-//    public static TaxCategoryCode valueOf(TaxCategoryCodeType uneceCode) {
-//    	return map.get(uneceCode.getValue());
-//    } 
-
 }
