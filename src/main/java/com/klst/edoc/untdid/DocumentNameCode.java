@@ -108,10 +108,10 @@ public enum DocumentNameCode {
     	value = Getter.getValue(codeType, "un.unece.uncefact.data.standard.qualifieddatatype._100.DocumentCodeType");
     	if(value!=null) return valueOf(Integer.parseInt((String)value));
     	
-    	value = Getter.getValue(codeType, "un.unece.uncefact.data.standard.qualifieddatatype._103.DocumentCodeType");
+    	value = Getter.getValue(codeType, "un.unece.uncefact.data.standard.qualifieddatatype._128.DocumentCodeType");
     	if(value!=null) return valueOf(Integer.parseInt((String)value));
     	
-    	value = Getter.getValue(codeType, "un.unece.uncefact.data.standard.unqualifieddatatype._103.CodeType");
+    	value = Getter.getValue(codeType, "un.unece.uncefact.data.standard.unqualifieddatatype._128.CodeType");
     	if(value!=null) return valueOf(Integer.parseInt((String)value));
     	
     	return null;
