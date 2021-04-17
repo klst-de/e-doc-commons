@@ -19,9 +19,12 @@ import javax.xml.datatype.XMLGregorianCalendar;
 public class DateTimeFormats {
 
 	// UNTDID 2379 Date/time/period format qualifier , see https://service.unece.org/trade/untdid/d96b/uncl/uncl2379.htm
-	public static final String CCYYMMDD_QUALIFIER = "102"; // == "yyyyMMdd"
+	public static final String CCYYMMDD_QUALIFIER = "102";
 	public static final String CCYYMMDD = "yyyyMMdd";
-	
+
+	public static final String CCYYMMDDHHMM_QUALIFIER = "203";
+	public static final String CCYYMMDDHHMM = "yyyyMMddHHmm";
+
 	public static Timestamp xmlGregorianCalendarToTs(XMLGregorianCalendar cal) {
 		long timeInMillis = cal.toGregorianCalendar().getTimeInMillis();
 		return new Timestamp(timeInMillis);
@@ -40,9 +43,24 @@ public class DateTimeFormats {
 		return ts;	
 	}
 	
+	// UNTDID 2379 Format "203" : CCYYMMDDHHMM = "yyyyMMddHHmm"
+	public static Timestamp yyyyMMddhhmmToTs(String ymd) {
+		Timestamp ts = null;
+		try {
+			DateFormat df = new SimpleDateFormat(CCYYMMDDHHMM);
+			ts = new Timestamp(((java.util.Date)df.parse(ymd)).getTime());
+		} catch (ParseException ex) {
+			// TODO Auto-generated catch block
+			ex.printStackTrace();
+		}
+		return ts;	
+	}
 	public static Timestamp ymdToTs(String ymd, String format) {
 		if(format.equals(CCYYMMDD_QUALIFIER)) {
 			return yyyyMMddToTs(ymd);
+		}
+		if(format.equals(CCYYMMDDHHMM_QUALIFIER)) {
+			return yyyyMMddhhmmToTs(ymd);
 		}
 		return ymdToTs(ymd);
 	}
@@ -85,6 +103,10 @@ public class DateTimeFormats {
 
 	public static String tsToCCYYMMDD(Timestamp ts) {
 		return new SimpleDateFormat(CCYYMMDD).format(ts);
+	}
+
+	public static String tsToCCYYMMDDHHMM(Timestamp ts) {
+		return new SimpleDateFormat(CCYYMMDDHHMM).format(ts);
 	}
 
 	// opentrans dtDATETIME: example <ORDER_DATE>2009-05-13T06:20:00+01:00</ORDER_DATE>
