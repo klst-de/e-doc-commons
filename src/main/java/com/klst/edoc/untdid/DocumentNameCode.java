@@ -3,7 +3,7 @@ package com.klst.edoc.untdid;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.klst.ebXml.reflection.Getter;
+import com.klst.ebXml.reflection.SCopyCtor;
 
 /* urn:xoev-de:kosit:codeliste:untdid.1001
  * United Nations Trade Data Interchange Directory (UNTDID), http://www.unece.org/fileadmin/DAM/trade/untdid/d16b/tred/tredi2.htm
@@ -102,17 +102,21 @@ public enum DocumentNameCode {
     }
 
     public static DocumentNameCode valueOf(Object codeType) {
-    	Object value = Getter.getValue(codeType, "un.unece.uncefact.data.specification.corecomponenttypeschemamodule._2.CodeType");
-    	if(value!=null) return valueOf(Integer.parseInt((String)value));
+    	try {
+        	Object value = SCopyCtor.getInstance().invokeGetValue(codeType, "un.unece.uncefact.data.specification.corecomponenttypeschemamodule._2.CodeType");
+        	if(value!=null) return valueOf(Integer.parseInt((String)value));
 
-    	value = Getter.getValue(codeType, "un.unece.uncefact.data.standard.qualifieddatatype._100.DocumentCodeType");
-    	if(value!=null) return valueOf(Integer.parseInt((String)value));
-    	
-    	value = Getter.getValue(codeType, "un.unece.uncefact.data.standard.qualifieddatatype._128.DocumentCodeType");
-    	if(value!=null) return valueOf(Integer.parseInt((String)value));
-    	
-    	value = Getter.getValue(codeType, "un.unece.uncefact.data.standard.unqualifieddatatype._128.CodeType");
-    	if(value!=null) return valueOf(Integer.parseInt((String)value));
+        	value = SCopyCtor.getInstance().invokeGetValue(codeType, "un.unece.uncefact.data.standard.qualifieddatatype._100.DocumentCodeType");
+        	if(value!=null) return valueOf(Integer.parseInt((String)value));
+        	
+        	value = SCopyCtor.getInstance().invokeGetValue(codeType, "un.unece.uncefact.data.standard.qualifieddatatype._128.DocumentCodeType");
+        	if(value!=null) return valueOf(Integer.parseInt((String)value));
+        	
+        	value = SCopyCtor.getInstance().invokeGetValue(codeType, "un.unece.uncefact.data.standard.unqualifieddatatype._128.CodeType");
+        	if(value!=null) return valueOf(Integer.parseInt((String)value));
+    	} catch (NumberFormatException e) {
+			e.printStackTrace(); // sollte nicht passieren
+    	}
     	
     	return null;
     }
