@@ -3,7 +3,7 @@ package com.klst.edoc.api;
 import java.math.BigDecimal;
 
 /**
- * abstract-factory, aka Kit for IAmount
+ * abstract-factory, aka Kit for IQuantity
  * 
  * @see <a href="https://java-design-patterns.com/patterns/abstract-factory/">java-design-patterns</a> for patterns abstract-factory
  */
