@@ -36,6 +36,9 @@ import com.klst.ebXml.reflection.SCopyCtor;
               the percentage of the invoice amount, or some other basis for the calculation of the
               commission to which a sales agent is entitled.
 -----------------
+     6     Product specification report
+              Report providing specification values of products.
+
      50    Validated priced tender
               A validated priced tender.
 
@@ -67,6 +70,7 @@ public enum DocumentNameCode {
 	CommissionNote 			(382),
 	
 	// used for AdditionalSupportingDocs:
+	ProductSpecification 	(  6),	// Order-X-No: 	82
 	ValidatedPricedTender   ( 50),	// BT-17 "Price/sales catalogue response" / Ausschreibung oder das Los
 	InvoicingDataSheet      (130),	// AdditionalSupportingDoc is BT-18 / Rechnungsdatenblatt
 	RelatedDocument         (916);	// AdditionalSupportingDoc is BG-24 / Related document / Referenzpapier
