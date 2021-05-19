@@ -98,16 +98,6 @@ public enum PaymentMeansEnum {
         return map.get(code);
     }
 
-//    public static PaymentMeansEnum valueOf(CodeType ublCode) {
-//    	int code = Integer.parseInt(ublCode.getValue());
-//        return valueOf(code);
-//    }
-
-//    public static PaymentMeansEnum valueOf(PaymentMeansCodeType ciiCode) {  TODO
-//    	int code = Integer.parseInt(ciiCode.getValue());
-//        return valueOf(code);
-//    }
-
     public static boolean isCreditTransfer(PaymentMeansEnum code) {
 		if(code==null) return false;
 		return(code==DebitTransfer
