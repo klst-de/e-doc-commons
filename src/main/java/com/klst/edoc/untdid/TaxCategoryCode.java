@@ -62,13 +62,14 @@ Anmerkung: nicht alle Codes aus der Codeliste UNTDID 5305 werden verwendet
  */
 public enum TaxCategoryCode {
 
-	StandardRate 		("S"),
-	ZeroRatedGoods 		("Z"),
-	ExemptFromTax 		("E"),
+	STANDARD_RATE 		("S"),
+	REDUCED_RATE 		("AA"),
+	ZERO_RATE 			("Z"),
+	EXEMPTION 			("E"),
 	VATreverseCharge 	("AE"),
 	VATexemptForEEA 	("K"),
-	FreeExport 			("G"),
-	ServicesOutsideScope ("O"),
+	FREE_EXPORT 		("G"),
+	OUTSIDE_SCOPE 		("O"),
 	
 	/**
 	 * IGIC/Impuesto General Indirecto Canario (Canary Islands general indirect tax)
