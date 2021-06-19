@@ -105,19 +105,17 @@ public enum DocumentNameCode {
         return map.get(code);
     }
 
+    private static final String[] codeTypeClasses = new String[]
+        	{ "un.unece.uncefact.data.specification.corecomponenttypeschemamodule._2.CodeType"
+        	, "un.unece.uncefact.data.standard.qualifieddatatype._100.DocumentCodeType"
+        	, "un.unece.uncefact.data.standard.qualifieddatatype._128.DocumentCodeType"
+        	, "un.unece.uncefact.data.standard.unqualifieddatatype._128.CodeType\""
+//        	, "..."
+        	};
     public static DocumentNameCode valueOf(Object codeType) {
     	try {
-        	Object value = SCopyCtor.getInstance().invokeGetValue(codeType, "un.unece.uncefact.data.specification.corecomponenttypeschemamodule._2.CodeType");
-        	if(value!=null) return valueOf(Integer.parseInt((String)value));
-
-        	value = SCopyCtor.getInstance().invokeGetValue(codeType, "un.unece.uncefact.data.standard.qualifieddatatype._100.DocumentCodeType");
-        	if(value!=null) return valueOf(Integer.parseInt((String)value));
-        	
-        	value = SCopyCtor.getInstance().invokeGetValue(codeType, "un.unece.uncefact.data.standard.qualifieddatatype._128.DocumentCodeType");
-        	if(value!=null) return valueOf(Integer.parseInt((String)value));
-        	
-        	value = SCopyCtor.getInstance().invokeGetValue(codeType, "un.unece.uncefact.data.standard.unqualifieddatatype._128.CodeType");
-        	if(value!=null) return valueOf(Integer.parseInt((String)value));
+    		Object value = SCopyCtor.getInstance().invokeGetValue(codeType, codeTypeClasses);
+    		if(value!=null) return valueOf(Integer.parseInt((String)value));
     	} catch (NumberFormatException e) {
 			e.printStackTrace(); // sollte nicht passieren
     	}
